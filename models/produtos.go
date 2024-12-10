@@ -16,7 +16,7 @@ type Produto struct {
 
 func BuscaTodosProdutos() []Produto {
 	db, error := db.ConectaComBancoDeDados()
-	if error == nil {
+	if error != nil {
 		fmt.Print("error:", error)
 	}
 
