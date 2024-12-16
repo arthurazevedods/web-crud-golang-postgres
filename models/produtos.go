@@ -38,6 +38,7 @@ func BuscaTodosProdutos() []Produto {
 			panic(fmt.Sprintf("Erro ao ler dados dos produtos: %v", err))
 		}
 
+		p.Id = id
 		p.Nome = nome
 		p.Descricao = descricao
 		p.Preco = preco
@@ -65,4 +66,21 @@ func CriarNovoProduto(nome, descricao string, preco float64, quantidade int) {
 
 	defer db.Close()
 
+}
+
+func DeletaProduto(id string) {
+	db, err := db.ConectaComBancoDeDados()
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	deletarProduto, err := db.Prepare("delete from produtos where id=$1")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	deletarProduto.Exec(id)
+
+	defer db.Close()
 }
